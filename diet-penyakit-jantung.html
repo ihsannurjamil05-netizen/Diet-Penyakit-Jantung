@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diet Penyakit Jantung</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-dark: #922b21;
+    --red-light: #f5b7b1;
+    --cream: #fdf6f0;
+    --warm: #f9ebe0;
+    --text: #2c1a1a;
+    --muted: #7d5a5a;
+    --white: #ffffff;
+    --gold: #d4a843;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a0a0a 0%, #3d0f0f 40%, #6b1a1a 70%, #8b2020 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 20px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(192,57,43,0.25) 0%, transparent 70%);
+  }
+
+  /* Animated particles */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #f5b7b1;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 24px;
+    border-radius: 50px;
+    margin-bottom: 32px;
+    backdrop-filter: blur(10px);
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 16px;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+
+  .hero-title span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 48px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    animation: fadeDown 0.8s 0.4s ease both;
+  }
+
+  /* SVG Heart */
+  .heart-visual {
+    margin: 0 auto 48px;
+    width: 180px;
+    height: 180px;
+    position: relative;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+
+  .heart-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 30px rgba(192,57,43,0.8));
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(192,57,43,0.6)); }
+    14% { transform: scale(1.13); filter: drop-shadow(0 0 40px rgba(192,57,43,1)); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.08); filter: drop-shadow(0 0 35px rgba(192,57,43,0.9)); }
+    70% { transform: scale(1); }
+  }
+
+  /* ECG line inside hero */
+  .ecg-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeDown 0.8s 0.6s ease both;
+  }
+
+  .ecg-line {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawECG 2s 1s ease forwards;
+  }
+
+  @keyframes drawECG {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== SCROLL INDICATOR ===== */
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    animation: scrollBounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    padding: 80px 20px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 48px;
+  }
+
+  /* ===== TUJUAN DIET ===== */
+  .tujuan-section {
+    background: var(--white);
+  }
+
+  .tujuan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media(max-width: 768px) {
+    .tujuan-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .tujuan-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tujuan-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--cream);
+    border-radius: 16px;
+    border-left: 4px solid var(--red);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tujuan-card:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(192,57,43,0.12);
+  }
+
+  .tujuan-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .tujuan-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  /* Syarat Diet */
+  .syarat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .syarat-item {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--warm), var(--cream));
+    border-radius: 12px;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.7;
+    border: 1px solid rgba(192,57,43,0.1);
+    position: relative;
+    padding-left: 36px;
+  }
+
+  .syarat-item::before {
+    content: '✦';
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    color: var(--red);
+    font-size: 0.6rem;
+  }
+
+  .syarat-item strong {
+    color: var(--red-dark);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ===== JADWAL MAKAN ===== */
+  .jadwal-section {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--warm) 100%);
+  }
+
+  .meals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  @media(max-width: 768px) {
+    .meals-grid { grid-template-columns: 1fr; }
+  }
+
+  .meal-card {
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .meal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.12);
+  }
+
+  .meal-header {
+    padding: 28px 24px 20px;
+    background: linear-gradient(135deg, var(--red-dark), var(--red));
+    color: #fff;
+    text-align: center;
+  }
+
+  .meal-header .meal-time {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+
+  .meal-header .meal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .meal-body {
+    padding: 24px;
+  }
+
+  .meal-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .meal-item:last-child { border-bottom: none; }
+
+  .meal-item::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .snack-tag {
+    display: inline-block;
+    background: var(--red-light);
+    color: var(--red-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    margin-top: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .jadwal-note {
+    background: linear-gradient(135deg, var(--red-dark), var(--red));
+    color: #fff;
+    padding: 28px 36px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* ===== PENGATURAN MAKANAN ===== */
+  .pengaturan-section {
+    background: var(--white);
+  }
+
+  .food-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .tab-btn {
+    padding: 10px 22px;
+    border-radius: 50px;
+    border: 2px solid var(--red-light);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+
+  .food-panel { display: none; }
+  .food-panel.active { display: block; }
+
+  .food-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media(max-width: 640px) {
+    .food-columns { grid-template-columns: 1fr; }
+  }
+
+  .food-col {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .food-col-header {
+    padding: 18px 24px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .food-col-header.ok {
+    background: linear-gradient(135deg, #1a6b3a, #27ae60);
+    color: #fff;
+  }
+
+  .food-col-header.no {
+    background: linear-gradient(135deg, #7d1a1a, var(--red));
+    color: #fff;
+  }
+
+  .food-col-body {
+    padding: 20px 24px;
+    background: var(--cream);
+    min-height: 120px;
+  }
+
+  .food-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 4px;
+    transition: transform 0.15s;
+  }
+
+  .food-tag:hover { transform: scale(1.05); }
+
+  .food-tag.ok {
+    background: #d5f0de;
+    color: #1a6b3a;
+  }
+
+  .food-tag.no {
+    background: #fde0dd;
+    color: #7d1a1a;
+  }
+
+  /* ===== CARA PENGOLAHAN ===== */
+  .cara-section {
+    background: linear-gradient(135deg, #1a0a0a 0%, #3d0f0f 100%);
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cara-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .cara-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media(max-width: 640px) {
+    .cara-grid { grid-template-columns: 1fr; }
+  }
+
+  .cara-card {
+    border-radius: 24px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cara-card.ok-cara {
+    background: rgba(39,174,96,0.12);
+    border: 1px solid rgba(39,174,96,0.3);
+  }
+
+  .cara-card.no-cara {
+    background: rgba(192,57,43,0.12);
+    border: 1px solid rgba(192,57,43,0.3);
+  }
+
+  .cara-card-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .cara-card.ok-cara .cara-card-title { color: #6ddc96; }
+  .cara-card.no-cara .cara-card-title { color: #f0907f; }
+
+  .cara-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cara-method {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .cara-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .ok-cara .cara-icon { background: rgba(39,174,96,0.25); }
+  .no-cara .cara-icon { background: rgba(192,57,43,0.25); }
+
+  /* ===== TIPS VISUAL ===== */
+  .tips-section {
+    background: var(--cream);
+    padding: 80px 20px;
+  }
+
+  .tips-big {
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 50%, #e74c3c 100%);
+    border-radius: 32px;
+    padding: 60px 48px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(192,57,43,0.4);
+  }
+
+  @media(max-width: 768px) {
+    .tips-big { flex-direction: column; padding: 40px 28px; gap: 32px; }
+  }
+
+  .tips-big::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .tips-big-heart {
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    animation: heartbeat 1.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.4));
+  }
+
+  .tips-big-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tips-big-text .label {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
+  }
+
+  .tips-big-text .quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+
+  .tips-trio {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .tip-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 18px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1a0a0a;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  footer p {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+
+  footer .footer-brand {
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  /* Pulse ring around heart */
+  .heart-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 2px solid rgba(192,57,43,0.4);
+    border-radius: 50%;
+    animation: ringPulse 1.4s ease-in-out infinite;
+  }
+
+  .heart-ring:nth-child(2) { animation-delay: 0.3s; width: 240px; height: 240px; }
+  .heart-ring:nth-child(3) { animation-delay: 0.6s; width: 280px; height: 280px; }
+
+  @keyframes ringPulse {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  /* Fade-in on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="particles" id="particles"></div>
+
+  <div class="heart-ring"></div>
+  <div class="heart-ring"></div>
+  <div class="heart-ring"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Panduan Kesehatan • Kementerian Kesehatan RI</div>
+
+    <div class="heart-visual">
+      <svg class="heart-svg" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+        <!-- Heart body -->
+        <path d="M50 85 C50 85 5 55 5 28 C5 12 17 2 30 2 C38 2 46 7 50 14 C54 7 62 2 70 2 C83 2 95 12 95 28 C95 55 50 85 50 85Z" 
+              fill="url(#heartGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        <!-- Highlight -->
+        <path d="M28 12 C20 15 14 22 13 30" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#e74c3c"/>
+            <stop offset="100%" style="stop-color:#7d1a1a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1 class="hero-title">
+      Diet
+      <span>Penyakit Jantung</span>
+    </h1>
+    <p class="hero-sub">Panduan pola makan sehat untuk menjaga kesehatan jantung Anda</p>
+
+    <!-- ECG Line -->
+    <div class="ecg-container">
+      <svg viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:60px;">
+        <polyline class="ecg-line"
+          points="0,40 60,40 80,40 90,15 100,60 115,5 130,70 145,40 200,40 220,40 230,20 240,55 250,10 265,65 280,40 340,40 360,40 370,22 380,58 392,8 407,68 420,40 480,40 500,40 510,25 520,55 532,12 547,66 560,40 600,40"
+          fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- TUJUAN & SYARAT DIET -->
+<section class="section tujuan-section">
+  <div class="container">
+    <div class="tujuan-grid">
+      <!-- TUJUAN -->
+      <div class="reveal">
+        <p class="section-label">Mengapa Diet?</p>
+        <h2 class="section-title">Tujuan<br>Diet Jantung</h2>
+        <div class="tujuan-cards">
+          <div class="tujuan-card"><div class="tujuan-icon">💪</div><div class="tujuan-text">Mengurangi beban kerja jantung</div></div>
+          <div class="tujuan-card"><div class="tujuan-icon">⚖️</div><div class="tujuan-text">Mencapai berat badan normal</div></div>
+          <div class="tujuan-card"><div class="tujuan-icon">🥗</div><div class="tujuan-text">Memenuhi kebutuhan gizi pasien</div></div>
+          <div class="tujuan-card"><div class="tujuan-icon">💧</div><div class="tujuan-text">Mencegah & menghilangkan penimbunan garam dan/atau cairan</div></div>
+          <div class="tujuan-card"><div class="tujuan-icon">🩸</div><div class="tujuan-text">Mengurangi risiko penyumbatan pembuluh darah</div></div>
+        </div>
+      </div>
+
+      <!-- SYARAT -->
+      <div class="reveal" style="transition-delay:0.15s">
+        <p class="section-label">Ketentuan Gizi</p>
+        <h2 class="section-title">Syarat<br>Diet</h2>
+        <div class="syarat-list">
+          <div class="syarat-item"><strong>Energi Cukup</strong>Untuk mencapai dan mempertahankan berat badan (BB) normal</div>
+          <div class="syarat-item"><strong>Protein 0,8–1 g/kg BB Ideal/hari</strong>Pada kondisi kardiak kaheksia: 1,2 g/kg BB ideal/hari</div>
+          <div class="syarat-item"><strong>Lemak 20–25% dari energi total</strong>&lt;10% lemak jenuh dan 10–15% lemak tidak jenuh</div>
+          <div class="syarat-item"><strong>Kolesterol Rendah</strong>Terutama jika disertai dengan dislipidemia</div>
+          <div class="syarat-item"><strong>Vitamin & Mineral Cukup</strong>Hindari suplemen kalium, kalsium, & magnesium jika tidak dibutuhkan</div>
+          <div class="syarat-item"><strong>Garam Rendah</strong>3–5 g/hari; batasi cairan jika disertai hipertensi atau edema</div>
+          <div class="syarat-item"><strong>Serat Cukup</strong>Untuk menghindari susah buang air besar (konstipasi)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JADWAL MAKAN -->
+<section class="section jadwal-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:0">
+      <p class="section-label">Jadwal Harian</p>
+      <h2 class="section-title" style="margin-bottom:40px">Contoh Menu<br>Sehari-hari</h2>
+    </div>
+
+    <div class="meals-grid reveal">
+      <!-- Pagi -->
+      <div class="meal-card">
+        <div class="meal-header">
+          <div class="meal-time">Pagi • 06.00 – 08.00</div>
+          <div class="meal-name">Sarapan</div>
+        </div>
+        <div class="meal-body">
+          <div class="meal-item">Nasi Tim</div>
+          <div class="meal-item">Ikan Pindang</div>
+          <div class="meal-item">Orak-arik Wortel</div>
+          <div class="meal-item">Teh Manis Encer</div>
+          <div><span class="snack-tag">Selingan 10.00 • Juice Pepaya</span></div>
+        </div>
+      </div>
+
+      <!-- Siang -->
+      <div class="meal-card">
+        <div class="meal-header">
+          <div class="meal-time">Siang • 12.00 – 13.00</div>
+          <div class="meal-name">Makan Siang</div>
+        </div>
+        <div class="meal-body">
+          <div class="meal-item">Nasi Tim</div>
+          <div class="meal-item">Daging Bumbu Tomat</div>
+          <div class="meal-item">Oseng-oseng Tempe</div>
+          <div class="meal-item">Sayur Bening Bayam</div>
+          <div class="meal-item">Buah: Jeruk Manis</div>
+          <div><span class="snack-tag">Selingan 16.00 • Slada Pepaya</span></div>
+        </div>
+      </div>
+
+      <!-- Malam -->
+      <div class="meal-card">
+        <div class="meal-header">
+          <div class="meal-time">Malam • 18.00 – 19.00</div>
+          <div class="meal-name">Makan Malam</div>
+        </div>
+        <div class="meal-body">
+          <div class="meal-item">Nasi Tim</div>
+          <div class="meal-item">Ayam Panggang Bumbu Kecap</div>
+          <div class="meal-item">Pepes Tahu</div>
+          <div class="meal-item">Cah Sayuran</div>
+          <div class="meal-item">Buah: Pisang Ambon</div>
+          <div><span class="snack-tag">Selingan 21.00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="jadwal-note reveal">
+      🔄 Untuk memvariasikan makanan, gunakan brosur bahan makanan penukar
+    </div>
+  </div>
+</section>
+
+<!-- PENGATURAN MAKANAN -->
+<section class="section pengaturan-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Panduan Pilihan</p>
+      <h2 class="section-title">Pengaturan<br>Makanan</h2>
+    </div>
+
+    <div class="food-tabs reveal">
+      <button class="tab-btn active" onclick="showTab('karbohidrat')">🍚 Karbohidrat</button>
+      <button class="tab-btn" onclick="showTab('protein-hewani')">🥩 Protein Hewani</button>
+      <button class="tab-btn" onclick="showTab('protein-nabati')">🫘 Protein Nabati</button>
+      <button class="tab-btn" onclick="showTab('sayuran')">🥦 Sayuran</button>
+      <button class="tab-btn" onclick="showTab('buah')">🍎 Buah</button>
+      <button class="tab-btn" onclick="showTab('minuman')">🍵 Minuman</button>
+      <button class="tab-btn" onclick="showTab('lainlain')">🧄 Lain-lain</button>
+    </div>
+
+    <div id="karbohidrat" class="food-panel active reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Nasi tim</span><span class="food-tag ok">Roti</span><span class="food-tag ok">Mie</span>
+            <span class="food-tag ok">Kentang</span><span class="food-tag ok">Makaroni</span><span class="food-tag ok">Tepung beras</span>
+            <span class="food-tag ok">Terigu</span><span class="food-tag ok">Sagu</span><span class="food-tag ok">Gula pasir</span>
+            <span class="food-tag ok">Gula merah</span><span class="food-tag ok">Madu</span><span class="food-tag ok">Sirup</span>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Ubi</span><span class="food-tag no">Tape</span><span class="food-tag no">Biskuit</span>
+            <p style="font-size:0.8rem;color:var(--muted);margin-top:12px;">Makanan mengandung gas atau alkohol</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="protein-hewani" class="food-panel reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Daging sapi tanpa lemak</span><span class="food-tag ok">Ayam tanpa kulit</span>
+            <span class="food-tag ok">Ikan</span><span class="food-tag ok">Telur</span><span class="food-tag ok">Susu rendah lemak</span>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Daging berlemak</span><span class="food-tag no">Ayam berlemak</span><span class="food-tag no">Kornet</span>
+            <span class="food-tag no">Nugget</span><span class="food-tag no">Sosis</span><span class="food-tag no">Hati</span>
+            <span class="food-tag no">Limpa</span><span class="food-tag no">Babat</span><span class="food-tag no">Otak</span>
+            <span class="food-tag no">Kepiting</span><span class="food-tag no">Kerang</span><span class="food-tag no">Keju</span>
+            <span class="food-tag no">Susu full cream</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="protein-nabati" class="food-panel reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Kacang kedelai</span><span class="food-tag ok">Tahu</span><span class="food-tag ok">Tempe</span>
+            <span class="food-tag ok">Kacang hijau</span>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Kacang tanah goreng</span><span class="food-tag no">Kacang mete</span><span class="food-tag no">Kacang bogor</span>
+            <p style="font-size:0.8rem;color:var(--muted);margin-top:12px;">Kacang-kacangan yang digoreng</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sayuran" class="food-panel reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Bayam</span><span class="food-tag ok">Buncis</span><span class="food-tag ok">Labu kuning</span>
+            <span class="food-tag ok">Labu siam</span><span class="food-tag ok">Wortel</span><span class="food-tag ok">Kacang panjang</span>
+            <span class="food-tag ok">Tomat</span><span class="food-tag ok">Gambas</span><span class="food-tag ok">Kangkung</span>
+            <span class="food-tag ok">Kecipir</span><span class="food-tag ok">Daun kecipir</span><span class="food-tag ok">Ketimun</span>
+            <span class="food-tag ok">Selada</span><span class="food-tag ok">Tauge</span>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Kol</span><span class="food-tag no">Kembang kol</span><span class="food-tag no">Lobak</span>
+            <span class="food-tag no">Sawi</span><span class="food-tag no">Nangka muda</span>
+            <p style="font-size:0.8rem;color:var(--muted);margin-top:12px;">Sayuran yang dapat menimbulkan gas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="buah" class="food-panel reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Jeruk</span><span class="food-tag ok">Apel</span><span class="food-tag ok">Pepaya</span>
+            <span class="food-tag ok">Melon</span><span class="food-tag ok">Jambu</span><span class="food-tag ok">Pisang</span>
+            <span class="food-tag ok">Alpukat</span><span class="food-tag ok">Belimbing</span><span class="food-tag ok">Mangga</span>
+            <p style="font-size:0.8rem;color:var(--muted);margin-top:12px;">Sari buah segar dianjurkan</p>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Durian</span><span class="food-tag no">Nangka</span><span class="food-tag no">Cempedak</span>
+            <span class="food-tag no">Nanas</span>
+            <p style="font-size:0.8rem;color:var(--muted);margin-top:12px;">Buah yang menimbulkan gas & tinggi lemak</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="minuman" class="food-panel reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Teh encer</span><span class="food-tag ok">Coklat</span><span class="food-tag ok">Sirup</span>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Kopi</span><span class="food-tag no">Teh kental</span><span class="food-tag no">Minuman bersoda</span>
+            <span class="food-tag no">Minuman beralkohol</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lainlain" class="food-panel reveal">
+      <div class="food-columns">
+        <div class="food-col">
+          <div class="food-col-header ok">✅ Dianjurkan</div>
+          <div class="food-col-body">
+            <span class="food-tag ok">Semua bumbu selain bumbu tajam</span>
+          </div>
+        </div>
+        <div class="food-col">
+          <div class="food-col-header no">🚫 Dibatasi / Dihindari</div>
+          <div class="food-col-body">
+            <span class="food-tag no">Cabe</span><span class="food-tag no">Bumbu olahan</span>
+            <p style="font-size:0.8rem;color:var(--muted);margin-top:12px;">Bumbu tajam dan bumbu instan olahan</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CARA PENGOLAHAN -->
+<section class="cara-section">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:48px;text-align:center;">
+      <p class="section-label" style="color:#f5b7b1">Teknik Memasak</p>
+      <h2 class="section-title" style="color:#fff">Cara Pengolahan<br>Makanan</h2>
+    </div>
+
+    <div class="cara-grid reveal">
+      <div class="cara-card ok-cara">
+        <div class="cara-card-title">✅ Cara yang Dianjurkan</div>
+        <div class="cara-methods">
+          <div class="cara-method"><div class="cara-icon">🍲</div> Direbus</div>
+          <div class="cara-method"><div class="cara-icon">♨️</div> Dikukus</div>
+          <div class="cara-method"><div class="cara-icon">🔥</div> Dipanggang</div>
+          <div class="cara-method"><div class="cara-icon">🥘</div> Ditumis</div>
+        </div>
+      </div>
+      <div class="cara-card no-cara">
+        <div class="cara-card-title">🚫 Cara yang Dihindari</div>
+        <div class="cara-methods">
+          <div class="cara-method"><div class="cara-icon">🛢️</div> Digoreng</div>
+        </div>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;margin-top:24px;line-height:1.6;">
+          Menggoreng menambahkan lemak berlebih yang meningkatkan beban kerja jantung dan kadar kolesterol darah.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PESAN UTAMA -->
+<section class="tips-section">
+  <div class="container">
+    <div class="tips-big reveal">
+      <svg class="tips-big-heart" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 85 C50 85 5 55 5 28 C5 12 17 2 30 2 C38 2 46 7 50 14 C54 7 62 2 70 2 C83 2 95 12 95 28 C95 55 50 85 50 85Z"
+              fill="rgba(255,255,255,0.9)"/>
+        <path d="M28 12 C20 15 14 22 13 30" stroke="rgba(192,57,43,0.4)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="tips-big-text">
+        <div class="label">Pesan Kesehatan</div>
+        <div class="quote">"Sayangi jantung Anda dengan pola makan sesuai gizi seimbang, berhenti merokok dan melakukan aktivitas fisik secara teratur"</div>
+        <div class="tips-trio">
+          <div class="tip-pill">🥗 Gizi Seimbang</div>
+          <div class="tip-pill">🚭 Berhenti Merokok</div>
+          <div class="tip-pill">🏃 Aktif Bergerak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+
+<script>
+  // Particles
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random()*100}%;
+      width: ${2+Math.random()*4}px;
+      height: ${2+Math.random()*4}px;
+      animation-duration: ${6+Math.random()*10}s;
+      animation-delay: ${Math.random()*8}s;
+    `;
+    container.appendChild(p);
+  }
+
+  // Tabs
+  function showTab(id) {
+    document.querySelectorAll('.food-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
